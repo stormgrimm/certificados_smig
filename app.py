@@ -1,55 +1,62 @@
+# app.py
 import streamlit as st
 import pandas as pd
-import os
-import subprocess
-import shutil
-from zipfile import ZipFile
+import io
+import zipfile
 
-st.set_page_config(page_title="Generador de certificados", layout="centered")
+st.set_page_config(page_title="Generador de Certificados", layout="centered")
 
 st.title("📜 Generador de certificados")
-st.write("Carga un archivo Excel con una columna con los nombres ('Nombre') para generar los certificados personalizados.")
+st.write("Carga un archivo Excel con una columna llamada `Nombre`.")
 
-uploaded_file = st.file_uploader("Cargar archivo de Excel", type=["xlsx"])
+uploaded_file = st.file_uploader("Sube tu archivo Excel", type=["xlsx"])
 
 if uploaded_file:
-    df = pd.read_excel(uploaded_file)
+    try:
+        df = pd.read_excel(uploaded_file)
 
-    if 'Nombre' not in df.columns:
-        st.error("La columna con los nombres se debe llamar 'Nombre'")
-    else:
-        st.success(f"Se cargaron {len(df)} nombres.")
-        st.dataframe(df)
+        if "Nombre" not in df.columns:
+            st.error("El archivo debe tener una columna llamada 'Nombre'.")
+        else:
+            st.success(f"Se encontraron {len(df)} nombres.")
 
-        if st.button("Generar certificados"):
-            # Prepare output directory
-            output_dir = "output"
-            if os.path.exists(output_dir):
-                shutil.rmtree(output_dir)
-            os.makedirs(output_dir, exist_ok=True)
+            # Generar contenido LaTeX
+            preamble = r"""
+\documentclass[12pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\pagestyle{empty}
+\begin{document}
+"""
+            ending = r"\end{document}"
 
-            # Read LaTeX template
-            with open("plantilla_certificado.tex", "r", encoding="utf-8") as f:
-                template = f.read()
-
-            # Generate PDFs
+            body = ""
             for nombre in df["Nombre"]:
-                tex_code = template.replace("<<NOMBRE>>", str(nombre))
-                tex_file = os.path.join(output_dir, f"{nombre}.tex")
-                with open(tex_file, "w", encoding="utf-8") as tf:
-                    tf.write(tex_code)
-                subprocess.run(["pdflatex", "-output-directory", output_dir, tex_file], stdout=subprocess.DEVNULL)
+                body += rf"""
+\begin{{center}}
+    \Huge \textbf{{Certificado de Participación}} \\[1.5cm]
+    \Large Se otorga a \\[0.5cm]
+    \textbf{{\LARGE {nombre}}} \\[0.5cm]
+    Por su destacada participación en el evento. \\[2cm]
+    Ciudad de México, junio 2025
+\end{{center}}
 
-            # Zip PDFs
-            zip_filename = "certificados.zip"
-            with ZipFile(zip_filename, "w") as zipf:
-                for file in os.listdir(output_dir):
-                    if file.endswith(".pdf"):
-                        zipf.write(os.path.join(output_dir, file), arcname=file)
+\newpage
+"""
 
-            st.success("¡Certificados generados!")
+            full_tex = preamble + body + ending
 
-            with open(zip_filename, "rb") as f:
-                st.download_button("⬇️ Descarga los certificados", f, file_name="certificados.zip")
+            tex_bytes = full_tex.encode("utf-8")
+            st.download_button(
+                label="📄 Descargar archivo LaTeX (.tex)",
+                data=tex_bytes,
+                file_name="certificados.tex",
+                mime="text/plain"
+            )
 
+    except Exception as e:
+        st.error(f"Error al leer el archivo: {e}")
 
