@@ -23,12 +23,14 @@ if uploaded_file:
             # Generar contenido LaTeX
             preamble = r"""
 \documentclass[12pt]{article}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
 \usepackage{graphicx}
-\usepackage{tikz}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+\usepackage{eso-pic}
+\usepackage[margin=2.5cm]{geometry}
 \pagestyle{empty}
+\setmainfont{Futura} % Asegúrate de que Futura esté instalada en tu sistema
+\definecolor{verdeSMIG}{HTML}{006c65}
 \begin{document}
 """
             ending = r"\end{document}"
@@ -36,14 +38,13 @@ if uploaded_file:
             body = ""
             for nombre in df["Nombre"]:
                 body += rf"""
+\AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
+\vspace*{{8cm}}  % Ajusta según tu plantilla
 \begin{{center}}
-    \Huge \textbf{{Certificado de Participación}} \\[1.5cm]
-    \Large Se otorga a \\[0.5cm]
-    \textbf{{\LARGE {nombre}}} \\[0.5cm]
-    Por su destacada participación en el evento. \\[2cm]
-    Ciudad de México, junio 2025
+    \color{{verdeSMIG}}
+    \fontsize{{23}}{{28}}\selectfont
+    \textbf{{{nombre}}}
 \end{{center}}
-
 \newpage
 """
 
