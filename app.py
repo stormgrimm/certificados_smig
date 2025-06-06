@@ -42,7 +42,7 @@ if uploaded_file:
 \AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
 \vspace*{{6cm}}  % Ajustar conforme a la plantilla
 \begin{{center}}
-    \hspace*{{-3cm}}
+    \hspace*{{-4cm}}
     \color{{verdeSMIG}}
     \fontsize{{23}}{{28}}\selectfont
     \textbf{{{nombre}}}
