@@ -40,7 +40,7 @@ if uploaded_file:
             for nombre in df["Nombre"]:
                 body += rf"""
 \AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
-\vspace*{{8.5cm}}  % Ajustar conforme a la plantilla
+\vspace*{{6cm}}  % Ajustar conforme a la plantilla
 \begin{{center}}
     \hspace*{{-3cm}}
     \color{{verdeSMIG}}
