@@ -27,7 +27,7 @@ if uploaded_file:
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{eso-pic}
-\usepackage[margin=2.5cm]{geometry}
+\usepackage[landscape, margin=2.5cm]{geometry}
 \pagestyle{empty}
 \setmainfont{Futura} % Asegúrate de que Futura esté instalada en tu sistema
 \definecolor{verdeSMIG}{HTML}{006c65}
