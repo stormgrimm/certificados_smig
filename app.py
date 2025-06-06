@@ -29,7 +29,8 @@ if uploaded_file:
 \usepackage{eso-pic}
 \usepackage[landscape, margin=2.5cm]{geometry}
 \pagestyle{empty}
-\setmainfont{Futura} % Asegúrate de que Futura esté instalada en tu sistema
+\setmainfont{tgheros} % Fuente similar a futura
+\renewcommand{\familydefault}{\sfdefault}
 \definecolor{verdeSMIG}{HTML}{006c65}
 \begin{document}
 """
@@ -39,8 +40,9 @@ if uploaded_file:
             for nombre in df["Nombre"]:
                 body += rf"""
 \AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
-\vspace*{{8cm}}  % Ajusta según tu plantilla
+\vspace*{{8.5cm}}  % Ajustar conforme a la plantilla
 \begin{{center}}
+    \hspace*{{-3cm}}
     \color{{verdeSMIG}}
     \fontsize{{23}}{{28}}\selectfont
     \textbf{{{nombre}}}
