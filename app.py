@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import io
 import zipfile
-from PyPDF2 import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 import zipfile
 
 st.set_page_config(page_title="Generador de Certificados", layout="centered")
