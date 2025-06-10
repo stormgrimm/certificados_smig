@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 import io
 import zipfile
-from pypdf import PdfReader, PdfWriter
+import pypdf
 import zipfile
 
 st.set_page_config(page_title="Generador de Certificados", layout="centered")
@@ -64,13 +64,14 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"Error al leer el archivo: {e}")
+        
 def split_pdf_by_names(pdf_bytes, names):
-    reader = PdfReader(io.BytesIO(pdf_bytes))
+    reader = pypdf.PdfReader(io.BytesIO(pdf_bytes))
     zip_buffer = io.BytesIO()
 
     with zipfile.ZipFile(zip_buffer, "w") as zipf:
         for i, name in enumerate(names):
-            writer = PdfWriter()
+            writer = pypdf.PdfWriter()
             writer.add_page(reader.pages[i])
             pdf_page = io.BytesIO()
             writer.write(pdf_page)
