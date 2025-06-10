@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import io
 import zipfile
+from PyPDF2 import PdfReader, PdfWriter
+import zipfile
 
 st.set_page_config(page_title="Generador de Certificados", layout="centered")
 
@@ -62,4 +64,29 @@ if uploaded_file:
 
     except Exception as e:
         st.error(f"Error al leer el archivo: {e}")
+def split_pdf_by_names(pdf_bytes, names):
+    reader = PdfReader(io.BytesIO(pdf_bytes))
+    zip_buffer = io.BytesIO()
 
+    with zipfile.ZipFile(zip_buffer, "w") as zipf:
+        for i, name in enumerate(names):
+            writer = PdfWriter()
+            writer.add_page(reader.pages[i])
+            pdf_page = io.BytesIO()
+            writer.write(pdf_page)
+            pdf_page.seek(0)
+            zipf.writestr(f"{name}.pdf", pdf_page.read())
+
+    zip_buffer.seek(0)
+    return zip_buffer
+
+st.title("Dividir PDF de certificados")
+
+uploaded_pdf = st.file_uploader("Sube el PDF con todos los certificados", type=["pdf"])
+uploaded_xlsx = st.file_uploader("Sube Excel con lista de nombres", type=["xlsx"])
+
+if uploaded_pdf and uploaded_xlsx:
+    df = pd.read_excel(uploaded_xlsx)
+    names = df['Nombre'].tolist()
+    zip_file = split_pdf_by_names(uploaded_pdf.read(), names)
+    st.download_button("Descargar certificados separados", zip_file, file_name="certificados_individuales.zip")
