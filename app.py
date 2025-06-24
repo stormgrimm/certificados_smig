@@ -29,6 +29,7 @@ if uploaded_file:
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{eso-pic}
+\usepackage{textpos}
 \usepackage[landscape, margin=2.5cm]{geometry}
 \pagestyle{empty}
 \setmainfont{tgheros} % Fuente similar a futura
@@ -53,11 +54,12 @@ if uploaded_file:
                 body += rf"""
             \AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
             
-            \begin{{textblock*}}{{22.5cm}}(0cm, 1.5cm)  % ancho del bloque, posición (x, y)
+            \begin{{textblock*}}{{22.5cm}}(-2.5cm, 1.5cm)  % ancho del bloque, posición (x, y)
 \begin{{minipage}}{{\textwidth}}
 \centering
 
-{quien} \\[0.4cm]
+
+\fontsize{16}{19.2}\selectfont {quien} \\[0.4cm]
 
 {que} \\[0.4cm]
 
