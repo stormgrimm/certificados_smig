@@ -47,25 +47,35 @@ if uploaded_file:
                 nombre = row.get("Nombre", "")
                 participacion = row.get("Participacion", "")
                 evento = row.get("Evento", "")
+                donde = row.get("Donde", "")
+                cuando = row.get("Cuando", "")
             
                 body += rf"""
             \AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
             
-            \vspace*{{1.5cm}}  % Posición inicial (ajusta según la plantilla)
-            
-            \begin{{center}}
-                \color{{verdeSMIG}}
-                {{{quien}}} \\[0.4cm]
-                {{{que}}} \\[0.4cm]
-                \fontsize{{16}}{{20}}\selectfont
-                \textbf{{{tipo}}} \\[0.4cm]
-                {{{para}}} \\[0.4cm]
-                \fontsize{{23}}{{28}}\selectfont
-                \textbf{{{nombre}}} \\[0.4cm]
-                \fontsize{{16}}{{20}}\selectfont
-                {{{participacion}}} \\[0.4cm]
-                \textbf{{{evento}}}
-            \end{{center}}
+            \begin{{textblock*}}{{22.5cm}}(0cm, 1.5cm)  % ancho del bloque, posición (x, y)
+\begin{{minipage}}{{\textwidth}}
+\centering
+
+{quien} \\[0.4cm]
+
+{que} \\[0.4cm]
+
+{{\color{{verdeSMIG}} \fontsize{{23}}{{28}}\selectfont \textbf{{{tipo}}}}} \\[0.4cm]
+
+{para} \\[0.4cm]
+
+{{\color{{verdeSMIG}} \fontsize{{23}}{{28}}\selectfont \textbf{{{nombre}}}}} \\[0.4cm]
+
+{participacion} \\[0.4cm]
+
+\textbf{{{evento}}}}} \\[0.4cm]
+
+{donde} \\[0.4cm]
+{cuando} \\[0.4cm]
+
+\end{{minipage}}
+\end{{textblock*}}
 
 \newpage
 """
