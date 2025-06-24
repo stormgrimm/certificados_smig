@@ -9,7 +9,7 @@ import zipfile
 st.set_page_config(page_title="Generador de Certificados", layout="centered")
 
 st.title("📜 Generador de certificados")
-st.write("Carga un archivo Excel con una columna llamada `Nombre`.")
+st.write("Carga un archivo Excel con las columnas `Quien`, `Que`, `Tipo`, `Para`, `Nombre`, `Partiipacion`, `Evento`, `Donde` y `Cuando.")
 
 uploaded_file = st.file_uploader("Sube tu archivo Excel", type=["xlsx"])
 
