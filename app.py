@@ -59,7 +59,7 @@ if uploaded_file:
 \centering
 
 
-\fontsize{16}{19.2}\selectfont {quien} \\[0.4cm]
+\fontsize{{16}}{{19.2}}\selectfont {quien} \\[0.4cm]
 
 {que} \\[0.4cm]
 
