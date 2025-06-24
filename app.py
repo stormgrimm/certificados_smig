@@ -39,16 +39,34 @@ if uploaded_file:
             ending = r"\end{document}"
 
             body = ""
-            for nombre in df["Nombre"]:
+            for _, row in df.iterrows():
+                quien = row.get("Quien", "")
+                que = row.get("Que", "")
+                tipo = row.get("Tipo", "")
+                para = row.get("Para", "")
+                nombre = row.get("Nombre", "")
+                participacion = row.get("Participacion", "")
+                evento = row.get("Evento", "")
+            
                 body += rf"""
-\AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
-\vspace*{{5.75cm}}  % Ajustar conforme a la plantilla
-\begin{{center}}
-    \hspace*{{-4cm}}
-    \color{{verdeSMIG}}
-    \fontsize{{23}}{{28}}\selectfont
-    \textbf{{{nombre}}}
-\end{{center}}
+            \AddToShipoutPictureBG*{{\includegraphics[width=\paperwidth,height=\paperheight]{{plantilla.pdf}}}}
+            
+            \vspace*{{1.5cm}}  % Posición inicial (ajusta según la plantilla)
+            
+            \begin{{center}}
+                \color{{verdeSMIG}}
+                {{{quien}}} \\[0.4cm]
+                {{{que}}} \\[0.4cm]
+                \fontsize{{16}}{{20}}\selectfont
+                \textbf{{{tipo}}} \\[0.4cm]
+                {{{para}}} \\[0.4cm]
+                \fontsize{{23}}{{28}}\selectfont
+                \textbf{{{nombre}}} \\[0.4cm]
+                \fontsize{{16}}{{20}}\selectfont
+                {{{participacion}}} \\[0.4cm]
+                \textbf{{{evento}}}
+            \end{{center}}
+
 \newpage
 """
 
