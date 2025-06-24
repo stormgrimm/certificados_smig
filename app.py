@@ -71,7 +71,7 @@ if uploaded_file:
 
 {participacion} \\[0.4cm]
 
-\textbf{{{evento}}}}} \\[0.4cm]
+\textbf{{{evento}}}} \\[0.4cm]
 
 {donde} \\[0.4cm]
 {cuando} \\[0.4cm]
